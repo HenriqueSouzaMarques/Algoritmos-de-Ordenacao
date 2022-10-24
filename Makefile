@@ -17,4 +17,4 @@ utils.o: utils/utils.c
 	$(CC) -c $(FLAGS) utils/utils.c
 
 clean:
-	rm $(OBJS)
+	rm $(BIN)

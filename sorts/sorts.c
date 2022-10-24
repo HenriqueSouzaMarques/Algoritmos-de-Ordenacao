@@ -16,10 +16,7 @@ void bubbleSort(item_t* vetor, int tamanhoVetor)
         {
             if(vetor[j] > vetor[j + 1])
             {
-                item_t aux = vetor[j];
-                vetor[j] = vetor[j + 1];
-                vetor[j + 1] = aux;
-
+                trocarItens(&vetor[j], &vetor[j + 1]);
                 trocou = 1;
             }
         }
@@ -54,7 +51,6 @@ void selectionSort(item_t* vetor, int tamanhoVetor)
     if(vetor == NULL) return;
 
     int indexMenorAtual;
-    item_t aux;
 
     for(int i = 0; i < tamanhoVetor; ++i)
     {
@@ -68,9 +64,7 @@ void selectionSort(item_t* vetor, int tamanhoVetor)
             }
         }
 
-        aux = vetor[indexMenorAtual];
-        vetor[indexMenorAtual] = vetor[i];
-        vetor[i] = aux;
+        trocarItens(&vetor[i], &vetor[indexMenorAtual]);
     }
 }
 
@@ -176,4 +170,44 @@ void mergeSort(item_t* vetor, int tamanhoVetor)
     vetor[0] = -1;
 
     dividir_conquistar(vetor, 0, tamanhoVetor - 1);
+}
+
+
+void _quickSort(item_t* vetor, int inicio, int fim)
+{
+    if(inicio >= fim) return;
+
+    /* Escolhendo o pivo de forma aleatória e colocando no início do vetor */
+    int pivo = (rand() % (fim - inicio)) + inicio;
+    trocarItens(&vetor[inicio], &vetor[pivo]);
+
+    pivo = inicio;
+    int i = inicio + 1;
+    int j = fim;
+
+    while(i <= j)
+    {
+        while(i <= j && vetor[i] <= vetor[pivo]) i++;
+
+        while(vetor[j] > vetor[pivo]) j--;
+
+        if(j > i)
+        {
+            trocarItens(&vetor[i], &vetor[j]);
+            i++;
+            j--;
+        }
+    }
+
+    trocarItens(&vetor[j], &vetor[inicio]);
+
+    _quickSort(vetor, inicio, j - 1);
+    _quickSort(vetor, j + 1, fim);
+}
+
+void quickSort(item_t* vetor, int tamanhoVetor)
+{
+    if(vetor == NULL) return;
+
+    _quickSort(vetor, 0, tamanhoVetor - 1);
 }

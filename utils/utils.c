@@ -50,6 +50,15 @@ void printarVetor(item_t* vetor, int tamanhoVetor)
     printf("\n");
 }
 
+void trocarItens(item_t* itemA, item_t* itemB)
+{
+    if(itemA == NULL || itemB == NULL) return;
+
+    item_t aux = *itemA;
+    *itemA = *itemB;
+    *itemB = aux;
+}
+
 BOOL estaOrdenado(item_t* vetor, int tamanhoVetor)
 {
     if(vetor == NULL) exit(1);

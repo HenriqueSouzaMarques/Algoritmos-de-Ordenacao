@@ -21,6 +21,8 @@ void embaralharVetor(item_t* vetor, int tamanhoVetor, int modo);
 
 void printarVetor(item_t* vetor, int tamanhoVetor);
 
+void trocarItens(item_t* itemA, item_t* itemB);
+
 BOOL estaOrdenado(item_t* vetor, int tamanhoVetor);
 
 double calcularTempo(item_t* vetor, int tamanhoVetor, void (*sorting)(item_t*, int));

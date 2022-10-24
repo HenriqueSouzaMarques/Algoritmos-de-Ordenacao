@@ -11,4 +11,6 @@ void shellSort(item_t* vetor, int tamanhoVetor);
 
 void mergeSort(item_t* vetor, int tamanhoVetor);
 
+void quickSort(item_t* vetor, int tamanhoVetor);
+
 #endif //SORTS_H
