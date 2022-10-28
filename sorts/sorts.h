@@ -10,7 +10,7 @@ void selectionSort(item_t* vetor, int tamanhoVetor);
 void shellSort(item_t* vetor, int tamanhoVetor);
 
 void mergeSort(item_t* vetor, int tamanhoVetor);
-
 void quickSort(item_t* vetor, int tamanhoVetor);
+void heapSort(item_t* vetor, int tamanhoVetor);
 
 #endif //SORTS_H

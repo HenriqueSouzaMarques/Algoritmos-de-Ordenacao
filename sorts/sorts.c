@@ -211,3 +211,42 @@ void quickSort(item_t* vetor, int tamanhoVetor)
 
     _quickSort(vetor, 0, tamanhoVetor - 1);
 }
+
+
+void heapMax(item_t* vetor, int pai, int tamanhoVetor)
+{
+    int filho = (2 * pai) + 1;
+
+    if(filho >= tamanhoVetor) return;
+
+    if(filho + 1 < tamanhoVetor && vetor[filho + 1] > vetor[filho])
+    {
+        filho = filho + 1;
+    }
+
+    if(vetor[filho] > vetor[pai])
+    {
+        trocarItens(&vetor[filho], &vetor[pai]);
+
+        heapMax(vetor, filho, tamanhoVetor);
+    }
+}
+
+void heapSort(item_t* vetor, int tamanhoVetor)
+{
+    if(vetor == NULL) return;   
+
+    for(int i = tamanhoVetor / 2; i >= 0; --i)
+    {
+        heapMax(vetor, i, tamanhoVetor);
+    }
+
+    while(tamanhoVetor > 0)
+    {
+        trocarItens(&vetor[0], &vetor[tamanhoVetor - 1]);
+        tamanhoVetor--;
+
+        heapMax(vetor, 0, tamanhoVetor);
+    }
+
+}
