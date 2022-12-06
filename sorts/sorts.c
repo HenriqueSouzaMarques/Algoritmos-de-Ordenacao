@@ -282,24 +282,24 @@ void countingSort(item_t* vetor, int tamanhoVetor)
         vetorContagem[vetor[i] - min]++;
     }
 
-    int* vetorAcumulada = (int*)calloc(amplitude, sizeof(int));
-    assert(vetorAcumulada != NULL);
-
-    for(int i = 1; i < amplitude; ++i)
+    int total = 0;
+    for(int i = 0; i < amplitude; ++i)
     {
-        vetorAcumulada[i] = vetorAcumulada[i - 1] + vetorContagem[i - 1];
-    }
-    free(vetorContagem);
+        int contagemAnterior = vetorContagem[i];
 
+        vetorContagem[i] = total;
+
+        total += contagemAnterior;
+    }
     
     for(int i = 0; i < tamanhoVetor; ++i)
     {
-        vetor[vetorAcumulada[copia[i] - min]] = copia[i];
+        vetor[vetorContagem[copia[i] - min]] = copia[i];
 
-        vetorAcumulada[copia[i] - min]++;
+        vetorContagem[copia[i] - min]++;
     }
 
-    free(vetorAcumulada);
-    free(copia);
+    free(vetorContagem);
 
+    free(copia);
 }
