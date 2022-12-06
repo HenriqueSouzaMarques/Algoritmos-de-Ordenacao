@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <assert.h>
 
 #include "sorts.h"
 
@@ -248,5 +250,56 @@ void heapSort(item_t* vetor, int tamanhoVetor)
 
         heapMax(vetor, 0, tamanhoVetor);
     }
+
+}
+
+
+void countingSort(item_t* vetor, int tamanhoVetor)
+{
+    if(vetor == NULL) return;
+
+    int min = vetor[0];
+    int max = vetor[0];
+
+    item_t* copia = (item_t*)malloc(tamanhoVetor * sizeof(item_t));
+    assert(copia != NULL);
+
+    for(int i = 0; i < tamanhoVetor; ++i)
+    {
+        copia[i] = vetor[i];
+
+        if(vetor[i] > max) max = vetor[i];
+        else if(vetor[i] < min) min = vetor[i];
+    }
+
+    int amplitude = (max - min) + 1;
+
+    int* vetorContagem = (int*)calloc(amplitude, sizeof(int));
+    assert(vetorContagem != NULL);
+
+    for(int i = 0; i < tamanhoVetor; ++i)
+    {
+        vetorContagem[vetor[i] - min]++;
+    }
+
+    int* vetorAcumulada = (int*)calloc(amplitude, sizeof(int));
+    assert(vetorAcumulada != NULL);
+
+    for(int i = 1; i < amplitude; ++i)
+    {
+        vetorAcumulada[i] = vetorAcumulada[i - 1] + vetorContagem[i - 1];
+    }
+    free(vetorContagem);
+
+    
+    for(int i = 0; i < tamanhoVetor; ++i)
+    {
+        vetor[vetorAcumulada[copia[i] - min]] = copia[i];
+
+        vetorAcumulada[copia[i] - min]++;
+    }
+
+    free(vetorAcumulada);
+    free(copia);
 
 }

@@ -20,14 +20,14 @@ int main(int argc, char *argv[])
     int tamanhoVetor = atoi(argv[2]);
 
     item_t* vetor = criarVetor(tamanhoVetor, modo);
-    printarVetor(vetor, tamanhoVetor);
+    //printarVetor(vetor, tamanhoVetor);
 
-    double tempo = calcularTempo(vetor, tamanhoVetor, heapSort);
+    double tempo = calcularTempo(vetor, tamanhoVetor, countingSort);
 
     if(estaOrdenado(vetor, tamanhoVetor))
     {
         printf("Vetor ordenado: ");
-        printarVetor(vetor, tamanhoVetor);
+        //printarVetor(vetor, tamanhoVetor);
 
         printf("Tempo de execução: %.3lfs\n", tempo);
     }
