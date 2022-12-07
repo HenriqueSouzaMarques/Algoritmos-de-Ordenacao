@@ -336,6 +336,23 @@ queue_t** criarBuckets(int amplitude)
     return buckets;
 }
 
+void posicionarBuckets(item_t* vetor, queue_t** buckets, int amplitude)
+{
+    int k = 0;
+    for(int i = 0; i < amplitude; ++i)
+    {
+        while(!isEmpty(buckets[i]))
+        {
+            element elementoAtual = pop(buckets[i]);
+            vetor[k++] = elementoAtual;
+        }
+
+        free(buckets[i]);
+    }
+
+    free(buckets);
+}
+
 void bucketSort(item_t* vetor, int tamanhoVetor)
 {
     if(vetor == NULL) return;
@@ -358,17 +375,5 @@ void bucketSort(item_t* vetor, int tamanhoVetor)
         push(buckets[vetor[i] - min], vetor[i]);
     }
 
-    int k = 0;
-    for(int i = 0; i < amplitude; ++i)
-    {
-        while(!isEmpty(buckets[i]))
-        {
-            element elementoAtual = pop(buckets[i]);
-            vetor[k++] = elementoAtual;
-        }
-
-        free(buckets[i]);
-    }
-
-    free(buckets);
+    posicionarBuckets(vetor, buckets, amplitude);
 }

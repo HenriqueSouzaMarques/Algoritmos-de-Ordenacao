@@ -25,9 +25,7 @@ int main(int argc, char *argv[])
 
     if(estaOrdenado(vetor, tamanhoVetor))
     {
-        printf("Vetor ordenado: ");
-        //printarVetor(vetor, tamanhoVetor);
-
+        printf("Vetor ordenado!\n");
         printf("Tempo de execução: %.3lfs\n", tempo);
     }
 
