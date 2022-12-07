@@ -18,6 +18,7 @@ void heapSort(item_t* vetor, int tamanhoVetor);
 
 /* O(n) */
 void countingSort(item_t* vetor, int tamanhoVetor);
+void bucketSort(item_t* vetor, int tamanhoVetor);
 
 
 

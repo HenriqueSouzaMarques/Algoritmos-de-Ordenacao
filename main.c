@@ -20,9 +20,8 @@ int main(int argc, char *argv[])
     int tamanhoVetor = atoi(argv[2]);
 
     item_t* vetor = criarVetor(tamanhoVetor, modo);
-    //printarVetor(vetor, tamanhoVetor);
 
-    double tempo = calcularTempo(vetor, tamanhoVetor, countingSort);
+    double tempo = calcularTempo(vetor, tamanhoVetor, bucketSort);
 
     if(estaOrdenado(vetor, tamanhoVetor))
     {

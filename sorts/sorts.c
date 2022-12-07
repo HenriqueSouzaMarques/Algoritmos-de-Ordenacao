@@ -4,6 +4,8 @@
 #include <assert.h>
 
 #include "sorts.h"
+#include "../utils/queue.h" /* Uso no Bucket Sort */
+
 
 void bubbleSort(item_t* vetor, int tamanhoVetor)
 {
@@ -253,6 +255,41 @@ void heapSort(item_t* vetor, int tamanhoVetor)
 
 }
 
+int* criarVetorContagem(item_t* vetor, int tamanhoVetor, int amplitude, int min)
+{
+    int* vetorContagem = (int*)calloc(amplitude, sizeof(int));
+    assert(vetorContagem != NULL);
+
+    for(int i = 0; i < tamanhoVetor; ++i)
+    {
+        vetorContagem[vetor[i] - min]++;
+    }
+
+    return vetorContagem;
+}
+
+void contarAcumulado(int* vetorContagem, int amplitude)
+{
+    int total = 0;
+    for(int i = 0; i < amplitude; ++i)
+    {
+        int contagemAnterior = vetorContagem[i];
+
+        vetorContagem[i] = total;
+
+        total += contagemAnterior;
+    }
+}
+
+void posicionarElementos(item_t* vetor, item_t* copia, int* vetorContagem, int tamanhoVetor, int min)
+{
+    for(int i = 0; i < tamanhoVetor; ++i)
+    {
+        vetor[vetorContagem[copia[i] - min]] = copia[i];
+
+        vetorContagem[copia[i] - min]++;
+    }   
+}
 
 void countingSort(item_t* vetor, int tamanhoVetor)
 {
@@ -274,32 +311,64 @@ void countingSort(item_t* vetor, int tamanhoVetor)
 
     int amplitude = (max - min) + 1;
 
-    int* vetorContagem = (int*)calloc(amplitude, sizeof(int));
-    assert(vetorContagem != NULL);
+    int* vetorContagem = criarVetorContagem(vetor, tamanhoVetor, amplitude, min);
 
-    for(int i = 0; i < tamanhoVetor; ++i)
-    {
-        vetorContagem[vetor[i] - min]++;
-    }
-
-    int total = 0;
-    for(int i = 0; i < amplitude; ++i)
-    {
-        int contagemAnterior = vetorContagem[i];
-
-        vetorContagem[i] = total;
-
-        total += contagemAnterior;
-    }
+    contarAcumulado(vetorContagem, amplitude);
     
-    for(int i = 0; i < tamanhoVetor; ++i)
-    {
-        vetor[vetorContagem[copia[i] - min]] = copia[i];
-
-        vetorContagem[copia[i] - min]++;
-    }
+    posicionarElementos(vetor, copia, vetorContagem, tamanhoVetor, min);
 
     free(vetorContagem);
 
     free(copia);
+}
+
+
+queue_t** criarBuckets(int amplitude)
+{
+    queue_t** buckets = (queue_t**)malloc(amplitude * sizeof(queue_t*));
+    assert(buckets != NULL);
+
+    for(int i = 0; i < amplitude; ++i)
+    {
+        buckets[i] = createQueue();
+    }
+
+    return buckets;
+}
+
+void bucketSort(item_t* vetor, int tamanhoVetor)
+{
+    if(vetor == NULL) return;
+
+    int min = vetor[0];
+    int max = vetor[0];
+
+    for(int i = 0; i < tamanhoVetor; ++i)
+    {
+        if(vetor[i] > max) max = vetor[i];
+        else if(vetor[i] < min) min = vetor[i];
+    }
+
+    int amplitude = (max - min) + 1;
+
+    queue_t** buckets = criarBuckets(amplitude);
+
+    for(int i = 0; i < tamanhoVetor; ++i)
+    {
+        push(buckets[vetor[i] - min], vetor[i]);
+    }
+
+    int k = 0;
+    for(int i = 0; i < amplitude; ++i)
+    {
+        while(!isEmpty(buckets[i]))
+        {
+            element elementoAtual = pop(buckets[i]);
+            vetor[k++] = elementoAtual;
+        }
+
+        free(buckets[i]);
+    }
+
+    free(buckets);
 }
