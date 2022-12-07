@@ -2,7 +2,7 @@
 #define SORTS_H
 
 #include "../utils/utils.h"
-
+#include "../utils/queue.h" /* Uso no Bucket Sort */
 
 /* O(n²) */
 void bubbleSort(item_t* vetor, int tamanhoVetor);

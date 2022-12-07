@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "utils/utils.h"
 #include "sorts/sorts.h"
 
 int main(int argc, char *argv[])

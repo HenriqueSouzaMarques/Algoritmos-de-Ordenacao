@@ -4,8 +4,6 @@
 #include <assert.h>
 
 #include "sorts.h"
-#include "../utils/queue.h" /* Uso no Bucket Sort */
-
 
 void bubbleSort(item_t* vetor, int tamanhoVetor)
 {
