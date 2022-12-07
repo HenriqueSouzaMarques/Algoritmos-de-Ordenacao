@@ -375,3 +375,71 @@ void bucketSort(item_t* vetor, int tamanhoVetor)
 
     posicionarBuckets(vetor, buckets, amplitude);
 }
+
+int calcularShift()
+{
+    int shift = 0;
+    int base = BASE;
+    while(base != 1)
+    {
+        shift++;
+        base /= 2;
+    }
+
+    return shift;
+}
+
+void contandoRadix(item_t* vetor, int tamanhoVetor, item_t* copia, int* contagem, int shift)
+{
+    for(int j = 0; j < tamanhoVetor; ++j)
+    {
+        int k = (vetor[j] >> shift) & (BASE - 1);
+        contagem[k]++;
+        copia[j] = vetor[j];
+    }    
+}
+
+void acumulaRadix(int* acumulada, int* contagem)
+{
+    acumulada[0] = 0;
+    for(int j = 1; j < BASE; ++j)
+    {
+        acumulada[j] = acumulada[j - 1] + contagem[j - 1];
+        contagem[j - 1] = 0;
+    }    
+}
+
+void posicionaRadix(item_t* vetor, int tamanhoVetor, item_t* copia, int* acumulada, int shift)
+{
+    for(int j = 0; j < tamanhoVetor; ++j)
+    {
+        int k = (copia[j] >> shift) & (BASE - 1);
+        vetor[acumulada[k]] = copia[j];
+
+        acumulada[k]++;       
+    }
+}
+
+void radixSort(item_t* vetor, int tamanhoVetor)
+{
+    if(vetor == NULL) return;
+    
+    int contagem[BASE] = {0};
+    int acumulada[BASE];
+
+    int shift = calcularShift();
+
+    item_t* copia = (item_t*)malloc(tamanhoVetor * sizeof(item_t));
+    assert(copia != NULL);
+
+    for(int i = 0; i < BASE/shift; i += shift)
+    {
+        contandoRadix(vetor, tamanhoVetor, copia, contagem, i);
+
+        acumulaRadix(acumulada, contagem);
+
+        posicionaRadix(vetor, tamanhoVetor, copia, acumulada, i);
+    }
+
+    free(copia);
+}

@@ -19,7 +19,10 @@ void heapSort(item_t* vetor, int tamanhoVetor);
 /* O(n) */
 void countingSort(item_t* vetor, int tamanhoVetor);
 void bucketSort(item_t* vetor, int tamanhoVetor);
+void radixSort(item_t* vetor, int tamanhoVetor);
 
+/* Base utilizada no radixSort. Utilizar sempre alguma potência de 2 maior ou igual a 32 */
+#define BASE 256
 
 
 

@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
     item_t* vetor = criarVetor(tamanhoVetor, modo);
 
-    double tempo = calcularTempo(vetor, tamanhoVetor, bucketSort);
+    double tempo = calcularTempo(vetor, tamanhoVetor, radixSort);
 
     if(estaOrdenado(vetor, tamanhoVetor))
     {
